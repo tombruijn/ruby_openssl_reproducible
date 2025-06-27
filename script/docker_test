@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -ex
+
+echo "Preparing environment"
+gem install openssl --version 3.3.0
+
+bundle install
+ruby script/report_parser.rb "$(bundle show appsignal)"
