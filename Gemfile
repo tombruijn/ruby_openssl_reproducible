@@ -3,4 +3,6 @@
 source "https://rubygems.org"
 
 gem "openssl", "3.3.0"
-gem "appsignal", "4.5.16"
+source "http://localhost:9292/private" do
+  gem "appsignal-custom"
+end

@@ -2,8 +2,29 @@
 
 set -ex
 
+echo "Setting up gemstash"
+gem install gemstash
+gemstash start &
+
+key=$(ruby -e "print \"$(gemstash authorize)\".delete_prefix('Your new key is: ')")
+gemstash authorize --key "$key"
+
+mkdir -p ~/.gem
+touch ~/.gem/credentials
+chmod 0600 ~/.gem/credentials
+echo "---" > ~/.gem/credentials
+echo ":test_key: $key" >> ~/.gem/credentials
+
+echo "Preparing Ruby gem"
+(
+  cd /integration
+  rake build:ruby:gem
+  gem push --key test_key --host http://localhost:9292/private pkg/appsignal-custom-4.5.16.gem
+)
+
 echo "Preparing environment"
 gem install openssl --version 3.3.0
 
 bundle install
 ruby script/report_parser.rb "$(bundle show appsignal)"
+tail -f /dev/null

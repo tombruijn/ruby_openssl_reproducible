@@ -1,9 +1,14 @@
 GEM
+  remote: http://localhost:9292/private/
+  specs:
+    appsignal-custom (4.5.16)
+      logger
+      openssl (= 3.3.0)
+      rack (>= 2.0.0)
+
+GEM
   remote: https://rubygems.org/
   specs:
-    appsignal (4.5.16)
-      logger
-      rack (>= 2.0.0)
     logger (1.7.0)
     openssl (3.3.0)
     rack (3.1.16)
@@ -12,7 +17,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  appsignal (= 4.5.16)
+  appsignal-custom!
   openssl (= 3.3.0)
 
 BUNDLED WITH
